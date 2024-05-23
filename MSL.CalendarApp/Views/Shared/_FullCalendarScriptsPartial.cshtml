@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+@*
+<link rel='stylesheet' type='text/css' href='/plugins/fullcalendar/fullcalendar.css' />
+
+<script type='text/javascript' src='/plugins/fullcalendar/fullcalendar.js'></script>
+<script type='text/javascript' src='/plugins/fullcalendar/moment.min.js'></script>
+<script type='text/javascript' src='/plugins/fullcalendar/sv.min.js'></script> *@
+@* <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@@fullcalendar/moment@6.1.13/index.global.min.js'></script> *@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.css" integrity="sha512-Vs4N3trA4pgbqu2gBzX8eyC1J6xwUWDOisDuy1lq1sW+ZvUuQo74/Uuv3tBQsroSDaYU5N64d33LJ5g6gN0MsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src='https://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+<script src='https://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+<script src="https://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+<script src='https://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+<script type="text/javascript">
+    function getFormatedDate(date) {
+
+        let startDate = new Date(date);
+
+        let year = startDate.getFullYear();
+        let month = ('0' + (startDate.getMonth() + 1)).slice(-2);
+        let day = ('0' + startDate.getDate()).slice(-2);
+
+        let hours = '00';
+        let minutes = '00';
+        let seconds = '00';
+
+        return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
+    }
+    var holidays = [];
+
+    var calendarUrl = 'https://www.googleapis.com/calendar/v3/calendars/en.swedish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyDfKWdpeRjC-731P6PQkR8DsKuuVewHpqc';
+    $.getJSON(calendarUrl)
+        .done(function (data) {
+            $.each(data.items, function (index, value) {
+
+                holidays.push({
+                    title: value.summary,
+                    start: value.start.date,
+                    end: value.end.date
+                })
+            });
+        })
+    console.log(holidays);
+    $(document).ready(function () {
+
+        $('#calendar').fullCalendar({
+            themeSystem: 'bootstrap',
+            header: {
+                left: 'prev,next today',
+                arguments: 'title',
+                right: 'month,agendaWeek,agendaDay list'
+            },
+            events: holidays,
+            weekNumbers: true,
+            eventTextColor: '#ffffff',
+            locale: 'sv',
+            buttonText: {
+                today: 'i dag',
+                month: 'nanad',
+                week: 'vecka',
+                day: 'dag',
+                list: 'lista'
+            }
+            // put your options and callbacks here
+        })
+    });
+</script>
+
