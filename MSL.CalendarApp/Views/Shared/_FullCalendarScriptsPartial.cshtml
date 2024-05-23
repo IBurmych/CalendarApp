@@ -8,20 +8,6 @@
 <script src='https://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
 
 <script type="text/javascript">
-    function getFormatedDate(date) {
-
-        let startDate = new Date(date);
-
-        let year = startDate.getFullYear();
-        let month = ('0' + (startDate.getMonth() + 1)).slice(-2);
-        let day = ('0' + startDate.getDate()).slice(-2);
-
-        let hours = '00';
-        let minutes = '00';
-        let seconds = '00';
-
-        return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
-    }
     var holidays = [];
 
     var calendarUrl = 'https://www.googleapis.com/calendar/v3/calendars/en.swedish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyDfKWdpeRjC-731P6PQkR8DsKuuVewHpqc';
