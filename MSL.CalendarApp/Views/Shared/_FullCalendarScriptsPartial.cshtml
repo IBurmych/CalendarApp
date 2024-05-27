@@ -8,22 +8,7 @@
 <script src='https://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
 
 <script type="text/javascript">
-    var holidays = [];
-
-    var calendarUrl = 'https://www.googleapis.com/calendar/v3/calendars/en.swedish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyDfKWdpeRjC-731P6PQkR8DsKuuVewHpqc';
-    $.getJSON(calendarUrl)
-        .done(function (data) {
-            $.each(data.items, function (index, value) {
-
-                holidays.push({
-                    title: value.summary,
-                    start: value.start.date,
-                    end: value.end.date
-                })
-            });
-        })
     $(document).ready(function () {
-
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap',
             header: {
@@ -31,7 +16,6 @@
                 arguments: 'title',
                 right: 'month,agendaWeek,agendaDay list'
             },
-            events: holidays,
             weekNumbers: true,
             eventTextColor: '#ffffff',
             locale: 'sv',
@@ -43,6 +27,22 @@
                 list: 'lista'
             }
         })
+
+        var calendarUrl = 'https://www.googleapis.com/calendar/v3/calendars/en.swedish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyDfKWdpeRjC-731P6PQkR8DsKuuVewHpqc';
+        $.getJSON(calendarUrl)
+            .done(function (data) {
+                var holidays = [];
+                $.each(data.items, function (index, value) {
+
+                    holidays.push({
+                        title: value.summary,
+                        start: value.start.date,
+                        end: value.end.date
+                    })
+                });
+                $("#calendar").fullCalendar('addEventSource', holidays);
+            })
+        
     });
 </script>
 
